@@ -1,12 +1,16 @@
 package main
 
 import (
+	"GoSocial/internal/env"
 	"log"
+
+	"github.com/joho/godotenv"
 )
 
 func main() {
+	godotenv.Load()
 	cfg := config{
-		addr: ":8080",
+		addr: env.GetString("ADDR", ":8080"),
 	}
 	app := &application{
 		config: cfg,
