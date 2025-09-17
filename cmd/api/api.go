@@ -18,6 +18,7 @@ type application struct {
 type config struct {
 	addr string
 	db   dbConfig
+	jwt  jwtConfig
 }
 
 type dbConfig struct {
@@ -25,6 +26,12 @@ type dbConfig struct {
 	maxOpenConns int
 	maxIdleConns int
 	maxIdleTime  string
+}
+
+type jwtConfig struct {
+	secret []byte
+	issuer string
+	expiry time.Duration
 }
 
 func (app *application) mount() http.Handler {
@@ -50,6 +57,9 @@ func (app *application) mount() http.Handler {
 
 	r.Route("/v1", func(r chi.Router) {
 		r.Get("/health", app.healthCheckHandler)
+		r.Post("/auth/login", app.loginHandler)
+		r.Post("/auth/register", app.registerHandler)
+
 	})
 
 	return r

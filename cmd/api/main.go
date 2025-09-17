@@ -5,6 +5,7 @@ import (
 	"GoSocial/internal/env"
 	"GoSocial/internal/store"
 	"log"
+	"time"
 
 	"github.com/joho/godotenv"
 )
@@ -19,7 +20,13 @@ func main() {
 			maxIdleConns: env.GetInt("DB_MAX_IDLE_CONNS", 30),
 			maxIdleTime:  env.GetString("DB_MAX_IDLE_TIME", "15mins"),
 		},
+		jwt: jwtConfig{
+			secret: []byte(env.GetString("JWT_SECRET", "change-this-super-secret-key-in-production")),
+			issuer: env.GetString("JWT_ISSUER", "gosocial-api"),
+			expiry: time.Duration(env.GetInt("JWT_EXPIRY_HOURS", 24)) * time.Hour,
+		},
 	}
+
 	db, err := db.New(cfg.db.addr, cfg.db.maxOpenConns, cfg.db.maxIdleConns, cfg.db.maxIdleTime)
 	if err != nil {
 		log.Panic(err)
