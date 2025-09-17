@@ -60,6 +60,16 @@ func (app *application) mount() http.Handler {
 		r.Post("/auth/login", app.loginHandler)
 		r.Post("/auth/register", app.registerHandler)
 
+		// Protected routes that require authentication
+		r.Group(func(r chi.Router) {
+			r.Get("/users/me", app.requireAuth(app.getUserProfileHandler))
+			r.Get("/posts", app.requireAuth(app.getPostsHandler))
+		})
+
+		// Admin routes (for future use)
+		r.Group(func(r chi.Router) {
+			r.Get("/admin/users", app.requireAdmin(app.getAllUsersHandler))
+		})
 	})
 
 	return r
