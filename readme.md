@@ -7,6 +7,7 @@ A personal project to learn Go by building a social media platform with JWT auth
 - Go backend development with Chi router
 - JWT authentication and middleware
 - PostgreSQL database operations
+- CI/CD pipelines (Versioning/Migrations/Tests/ImageBuilder/AWS deploy)
 
 ## Tech Stack
 
