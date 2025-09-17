@@ -20,7 +20,7 @@ A personal project to learn Go by building a social media platform with JWT auth
 - Node.js 20+
 - Docker
 
-## � How to Run
+## Run
 
 ### 1. Start Database
 ```bash
